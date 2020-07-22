@@ -8,20 +8,24 @@ declare global {
   interface Window {
     store: any;
   }
+
+  interface CartItem {
+    id: number;
+    quantity: number;
+  }
 }
 
 window.store = new Vuex.Store({
   state: {
     products: bookList,
     cart: {
-      items: []
+      items: Array<CartItem>()
     }
   },
   mutations: {
     initializeVuexStore(state) {
       // Check if the vuex store exists in local storage
       const locVuexStore = localStorage.getItem('vuexStore');
-      console.log('initializing');
 
       if (locVuexStore) {
         this.replaceState(Object.assign(state, JSON.parse(locVuexStore)));
@@ -30,17 +34,16 @@ window.store = new Vuex.Store({
         localStorage.setItem('vuexStore', JSON.stringify(state));
       }
     },
-    addToCart(state, itemId: number) {
-      console.log(`adding id #${itemId}`);
+    addToCart(state, itemId: number): void {
       state.cart.items.push({
         id: itemId,
         quantity: 1
       });
-
-      console.log('current cart', state.cart);
+    },
+    setQuantity(state: any, { itemId, quantity }: { itemId: number; quantity: number }): void {
+      (state.cart.items.find((itm: CartItem) => itm.id === itemId) as CartItem).quantity = quantity;
     },
     removeFromCart(state, itemId: number) {
-      console.log(`removing id #${itemId}`);
       state.cart.items = state.cart.items.filter((itm: any) => itm.id !== itemId);
     },
     loadProducts(state, products: any[]) {
@@ -49,7 +52,23 @@ window.store = new Vuex.Store({
   },
   actions: {},
   modules: {},
-  getters: {}
+  getters: {
+    subtotal(state, getters) {
+      return state.cart.items.reduce((acc, item) => {
+        acc += item.quantity * state.products.find(book => book.id === item.id)?.price;
+
+        return acc;
+      }, 0);
+    },
+    shipping(state, getters) {
+      const shippingAndHandlingConstant = 0.149;
+
+      return ~~(shippingAndHandlingConstant * getters.subtotal);
+    },
+    total(state, getters) {
+      return getters.subtotal + getters.shipping;
+    }
+  }
 });
 
 export default window.store;
