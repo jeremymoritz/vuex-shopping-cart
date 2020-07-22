@@ -2,18 +2,29 @@
   <div class="product-list">
     <h1>{{ msg }}</h1>
     <ul>
-      <li>Product 1 goes here</li>
+      <li>
+        <Product
+          title="The Silmarillion2"
+          author="J.R.R. Tolkien2"
+          imageSrc="https://images.subsplash.com/image.jpg?id=96cd56f2-a3e8-4fa5-9ba0-ee274e62ac06&w=260&h=400"
+          :price="888"
+        />
+      </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import Product from '@/components/Product.vue';
 
 export default Vue.extend({
   name: 'ProductList',
   props: {
     msg: String
+  },
+  components: {
+    Product
   }
 });
 </script>
