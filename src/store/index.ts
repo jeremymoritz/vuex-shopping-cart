@@ -4,7 +4,13 @@ import bookList from '../assets/Data.json';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+declare global {
+  interface Window {
+    store: any;
+  }
+}
+
+window.store = new Vuex.Store({
   state: {
     products: bookList,
     cart: {
@@ -12,6 +18,18 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    initializeVuexStore(state) {
+      // Check if the vuex store exists in local storage
+      const locVuexStore = localStorage.getItem('vuexStore');
+      console.log('initializing');
+
+      if (locVuexStore) {
+        this.replaceState(Object.assign(state, JSON.parse(locVuexStore)));
+      } else {
+        localStorage.clear();
+        localStorage.setItem('vuexStore', JSON.stringify(state));
+      }
+    },
     addToCart(state, itemId: number) {
       console.log(`adding id #${itemId}`);
       state.cart.items.push({
@@ -33,3 +51,14 @@ export default new Vuex.Store({
   modules: {},
   getters: {}
 });
+
+export default window.store;
+
+(function runOnlyOnce() {
+  window.store.commit('initializeVuexStore');
+
+  // Subscribe to store updates
+  window.store.subscribe((mutation: any, state: any) => {
+    localStorage.setItem('vuexStore', JSON.stringify(state));
+  });
+})();

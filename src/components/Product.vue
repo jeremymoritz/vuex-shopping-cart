@@ -1,11 +1,12 @@
 <template>
-  <div class="product">
+  <div class="product" :class="{ 'in-cart': !!quantityInCart }">
     <div class="details">
       <section class="title-and-author">
         <h2>{{ title }}</h2>
         <h3>By: {{ author }}</h3>
       </section>
       <section class="quantity" v-if="quantityInCart" :title="'quantityInCart: ' + quantityInCart">
+        <i class="fa fa-shopping-cart fa-lg"></i>
         In Cart
       </section>
       <section class="price">${{ (price / 100).toFixed(2) }}</section>
@@ -41,7 +42,16 @@ export default Vue.extend({
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  transition: transform 0.3s;
+  position: relative;
 
+  &:hover {
+    transform: scale(1.05);
+    z-index: 2;
+  }
+  &.in-cart {
+    background: #ffd;
+  }
   .details {
     text-align: left;
     display: flex;
@@ -54,6 +64,12 @@ export default Vue.extend({
     }
     h3 {
       font-weight: normal;
+    }
+    .quantity {
+      border: 1px solid #ccc;
+      padding: 0.5rem 1rem;
+      align-self: flex-start;
+      border-radius: 4px;
     }
   }
   img {
