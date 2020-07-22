@@ -1,6 +1,6 @@
 <template>
   <div class="products">
-    <img alt="Vue logo" src="../assets/shopping_cart.png" />
+    <img alt="Shop" class="shop-cart-logo" src="../assets/shopping_cart.png" />
     <ProductList msg="A List of Available Books" />
   </div>
 </template>
@@ -16,3 +16,9 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss">
+.shop-cart-logo {
+  height: 150px;
+}
+</style>

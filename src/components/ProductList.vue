@@ -2,12 +2,13 @@
   <div class="product-list">
     <h1>{{ msg }}</h1>
     <ul>
-      <li>
+      <li v-for="book in books" :key="book.id" @click="toggleInCart(book.id)">
         <Product
-          title="The Silmarillion2"
-          author="J.R.R. Tolkien2"
-          imageSrc="https://images.subsplash.com/image.jpg?id=96cd56f2-a3e8-4fa5-9ba0-ee274e62ac06&w=260&h=400"
-          :price="888"
+          :title="book.title"
+          :author="book.author"
+          :image="book.image"
+          :price="book.price"
+          :quantityInCart="cartQuantity(book.id)"
         />
       </li>
     </ul>
@@ -17,32 +18,60 @@
 <script lang="ts">
 import Vue from 'vue';
 import Product from '@/components/Product.vue';
+import store from '../store';
 
 export default Vue.extend({
   name: 'ProductList',
+  data() {
+    return {
+      books: store.state.products
+    };
+  },
   props: {
     msg: String
   },
   components: {
     Product
+  },
+  methods: {
+    toggleInCart(bookId: number) {
+      if (store.state.cart.items.map((itm: any) => itm.id).includes(bookId)) {
+        store.commit('removeFromCart', bookId);
+      } else {
+        store.commit('addToCart', bookId);
+      }
+    },
+    cartQuantity(bookId: number) {
+      return (
+        store.state.cart.items.find((item: any) => item.id === bookId) || {
+          quantity: 0
+        }
+      ).quantity;
+    }
   }
 });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
+.product-list ul {
+  display: grid;
+  grid-gap: 1rem;
+
+  li {
+    list-style-type: none;
+  }
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+@media (min-width: 768px) {
+  .product-list ul {
+    grid-template-columns: 1fr 1fr;
+  }
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+
+@media (min-width: 1200px) {
+  .product-list ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

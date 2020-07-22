@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> | <router-link to="/about">About</router-link> |
-      <router-link to="/products">Products</router-link>
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+      <router-link to="/products">Books</router-link>
     </div>
     <router-view />
   </div>
@@ -18,14 +19,27 @@
 }
 
 #nav {
-  padding: 30px;
+  padding: 0;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  display: inline-block;
 
   a {
     font-weight: bold;
     color: #2c3e50;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #b94283;
+      background: #eee;
+    }
+    &:not(.router-link-exact-active):hover {
+      background: lighten(#b94283, 40%);
+    }
+    + a {
+      border-left: 1px solid #bbb;
     }
   }
 }
