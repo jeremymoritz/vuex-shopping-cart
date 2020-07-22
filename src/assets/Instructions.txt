@@ -1,0 +1,10 @@
+Instructions
+
+Build a shopping cart for your application using the provided design spec and
+data using modern web standards and any libraries or frameworks you
+think will help you accomplish the task. We believe this should take no more
+than 3 or 4 hours, but if you would like to spend more time on it that's OK.
+
+Please submit code as if you intended to ship it to production. The details
+matter. We're looking to see that it could belong in the scope of a larger
+application with state management, tests, and well written, idiomatic code.

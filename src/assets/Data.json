@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "The Silmarillion",
+    "author": "J.R.R. Tolkien",
+    "image": {
+      "url": "https://images.subsplash.com/image.jpg?id=96cd56f2-a3e8-4fa5-9ba0-ee274e62ac06&w={width}&h={height}",
+      "loading_color": "#8a4972",
+      "height": 400,
+      "width": 260
+    },
+    "price": 999
+  },
+  {
+    "id": 2,
+    "title": "The Lottery",
+    "author": "D.K. Wall",
+    "image": {
+      "url": "https://images.subsplash.com/image.jpg?id=2d84b300-2769-41ce-bc07-6468e55dbd0a&w={width}&h={height}",
+      "loading_color": "#f6e084",
+      "height": 346,
+      "width": 228
+    },
+    "price": 1247
+  },
+  {
+    "id": 3,
+    "title": "The Grass is Singing: A Novel",
+    "author": "Doris Lessing",
+    "image": {
+      "url": "https://images.subsplash.com/image.jpg?id=7d9e44ce-40b2-4353-8a73-443331524700&w={width}&h={height}",
+      "loading_color": "#e86451",
+      "height": 499,
+      "width": 328
+    },
+    "price": 1119
+  }
+]
