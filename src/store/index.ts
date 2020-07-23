@@ -55,7 +55,7 @@ window.store = new Vuex.Store({
   getters: {
     subtotal(state, getters) {
       return state.cart.items.reduce((acc, item) => {
-        acc += item.quantity * state.products.find(book => book.id === item.id)?.price;
+        acc += item.quantity * (state.products.find(book => book.id === item.id)?.price || 0);
 
         return acc;
       }, 0);
